@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Config;
 |------------------------------------------------------------------------------
 | Session Helpers
 |------------------------------------------------------------------------------
-| in Laravel, you can have multiple session configurations with different 
-| expiration times. Laravel provides flexibility in configuring session drivers 
-| and options, allowing you to define separate session configurations as needed 
+| in Laravel, you can have multiple session configurations with different
+| expiration times. Laravel provides flexibility in configuring session drivers
+| and options, allowing you to define separate session configurations as needed
 | for your application.
 |
 */
@@ -76,7 +76,7 @@ if (!function_exists('clearSession')) {
 |------------------------------------------------------------------------------
 | Localization Helpers:
 |------------------------------------------------------------------------------
-| 
+|
 |
 */
 
@@ -85,7 +85,7 @@ if (!function_exists('clearSession')) {
 |------------------------------------------------------------------------------
 | Formating Helpers:
 |------------------------------------------------------------------------------
-| 
+|
 |
 */
 
@@ -99,4 +99,21 @@ if (!function_exists('formatUuid')) {
             dechex(hexdec(substr($hexString, 16, 1)) & 0x3 | 0x8) . substr($hexString, 17, 3) . '-' .
             substr($hexString, 20, 12);
     }
+}
+
+
+if (!function_exists('deviceUniqueID')) {
+  	function deviceUniqueID($key = 'device') {
+    		# get device id if exist in reuest sesion
+    		$deviceId = request()->session()->get($key);
+
+    		if (!$deviceId) {
+          # Generate unique device ID based on user-agent
+          # by usin md5 generate string values
+    			$deviceId = md5(request()->header('User-Agent'));
+    			putSession([$key =>  $deviceId], 'put');
+    		}
+
+    		return $deviceId;
+  	}
 }
