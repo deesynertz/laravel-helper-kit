@@ -1,6 +1,6 @@
 <?php
 
-namespace Deesynertz\Helpers;
+namespace Deesynertz\HelperKit;
 
 use Illuminate\Support\ServiceProvider;
 
