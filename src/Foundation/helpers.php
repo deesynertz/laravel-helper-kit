@@ -79,3 +79,24 @@ if (!function_exists('clearSession')) {
 | 
 |
 */
+
+
+/*
+|------------------------------------------------------------------------------
+| Formating Helpers:
+|------------------------------------------------------------------------------
+| 
+|
+*/
+
+if (!function_exists('formatUuid')) {
+    function formatUuid($hexString)
+    {
+        # Format Your string as UUID-like
+        return substr($hexString, 0, 8) . '-' .
+            substr($hexString, 8, 4) . '-' .
+            '4' . substr($hexString, 12, 3) . '-' .
+            dechex(hexdec(substr($hexString, 16, 1)) & 0x3 | 0x8) . substr($hexString, 17, 3) . '-' .
+            substr($hexString, 20, 12);
+    }
+}

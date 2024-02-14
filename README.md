@@ -4,6 +4,8 @@ It suggests a collection of helper utilities specifically tailored for Laravel d
 
 ## Features
 
+1. Session Helpers: for developer who want to use maltiple session in deferent time now you can use single helper and provide driver then it will config for you
+
 ### Installation
 
 Using Composer run
