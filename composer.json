@@ -1,0 +1,37 @@
+{
+    "name": "deesynertz/laravel-helper-kit",
+    "description": "It suggests a collection of helper utilities specifically tailored for Laravel development",
+    "keywords": [
+       "php", "laravel", "helpers", "helper", "kit",  "laravel-helper-kit"
+    ],
+    "homepage": "https://github.com/deesynertz/laravel-helper-kit",
+    "type": "library",
+    "license": "MIT",
+    "authors":[
+        {
+            "name":"Deogratias Alison",
+            "email":"deesynertz@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Deesynertz\\HelperKit\\": "src/"
+        },
+        "files": [
+            "src/Foundation/helpers.php"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Deesynertz\\HelperKit\\HelperKitServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.5.0",
+        "illuminate/support": ">=5.2.7",
+        "illuminate/session": ">=5.2.7"
+    }
+}
