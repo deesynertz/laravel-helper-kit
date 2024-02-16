@@ -101,7 +101,6 @@ if (!function_exists('formatUuid')) {
     }
 }
 
-
 if (!function_exists('deviceUniqueID')) {
   	function deviceUniqueID($key = 'device') {
     		# get device id if exist in reuest sesion
@@ -116,4 +115,27 @@ if (!function_exists('deviceUniqueID')) {
 
     		return $deviceId;
   	}
+}
+
+if(!function_exists('greatingUser')) {
+    function greatingUser($withName = false)
+    {
+        $currentTime = nowAsdatetime();
+        $greeting = '';
+        if ($currentTime->hour >= 5 && $currentTime->hour < 12) {
+            $greeting = 'Good morning';
+        } elseif ($currentTime->hour >= 12 && $currentTime->hour < 18) {
+            $greeting = 'Good afternoon';
+        } else {
+            $greeting = 'Good evening';
+        }
+
+        $greeting = Str::title($greeting)
+
+        if ($withName && Auth::check() && isset(Auth::user()->name)) {
+            $greeting = Auth::user()->name .' '.$greeting;
+        }
+
+        return $greeting;
+    }
 }
