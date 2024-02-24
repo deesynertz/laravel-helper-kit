@@ -37,6 +37,15 @@ Add the service provider to the `providers` array in your `config/app.php` file:
 
 ### Usage
 
+now we have some functions
+
+#### Invoices Helpers
+
+```php
+invoiceTypeDisplay($invoice)
+invoiceStatusDisplay($invoice)
+```
+
 ## Contributions
 
 Contributions and feedback are welcome! Feel free to open an issue or submit a pull request on GitHub.

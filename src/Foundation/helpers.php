@@ -1,6 +1,15 @@
 <?php
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Config;
+
+const TAX_INVOICE       = 'Tax';
+const PROFORMA_INVOICE  = 'Proforma';
+const OVERDUE           = 'Overdue';
+const VOID_STATUS       = 'Void';
+
+if (!function_exists('stastusPending')) { function stastusPending() { return 'Pending'; } }
+if (!function_exists('stastusPaid')) { function stastusPaid() { return 'Paid'; } }
 
 /*
 |------------------------------------------------------------------------------
@@ -117,25 +126,61 @@ if (!function_exists('deviceUniqueID')) {
   	}
 }
 
-if(!function_exists('greatingUser')) {
-    function greatingUser($withName = false)
+// if(!function_exists('greatingUser')) {
+//     function greatingUser($withName = false)
+//     {
+//         $currentTime = nowAsdatetime();
+//         $greeting = '';
+//         if ($currentTime->hour >= 5 && $currentTime->hour < 12) {
+//             $greeting = 'Good morning';
+//         } elseif ($currentTime->hour >= 12 && $currentTime->hour < 18) {
+//             $greeting = 'Good afternoon';
+//         } else {
+//             $greeting = 'Good evening';
+//         }
+
+//         // $greeting = Str::title($greeting)
+
+//         if ($withName && Auth::check() && isset(Auth::user()->name)) {
+//             $greeting = Auth::user()->name .' '.$greeting;
+//         }
+
+//         return $greeting;
+//     }
+// }
+
+
+
+# INVOICES
+if (!function_exists('invoiceTypeDisplay')) {
+    function invoiceTypeDisplay($invoiceable)
     {
-        $currentTime = nowAsdatetime();
-        $greeting = '';
-        if ($currentTime->hour >= 5 && $currentTime->hour < 12) {
-            $greeting = 'Good morning';
-        } elseif ($currentTime->hour >= 12 && $currentTime->hour < 18) {
-            $greeting = 'Good afternoon';
+        if ($invoiceable->type == PROFORMA_INVOICE) {
+            $invoiceableObject = [
+                'color' => 'info',
+                'type'  => Str::title($invoiceable->type) .' Invoice',
+            ];
         } else {
-            $greeting = 'Good evening';
+            $invoiceableObject = [
+                'color' => 'success',
+                'type'  => Str::title($invoiceable->type) .' Invoice',
+            ];
         }
 
-        $greeting = Str::title($greeting)
+        return (object)$invoiceableObject;
+    }
+}
 
-        if ($withName && Auth::check() && isset(Auth::user()->name)) {
-            $greeting = Auth::user()->name .' '.$greeting;
-        }
+if (!function_exists('invoiceStatusDisplay')) {
+    function invoiceStatusDisplay($invoiceable)
+    {
+        $status = $invoiceable->status;
+        $invoiceableObject['status'] = ($status == VOID_STATUS) ? 'Canceled' : Str::title($status);
+        $invoiceableObject['color']  = ($status == stastusPaid()) ? 'success' :
+            (($status == stastusPending()) ? 'info' :
+                (($status == OVERDUE) ? 'warning' : 'danger')
+            );
 
-        return $greeting;
+        return (object)$invoiceableObject;
     }
 }
